@@ -1,6 +1,6 @@
 {
   "name": "@fm-elpac/deno-kv-util",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "exports": {
     ".": "./src/lib.ts"
   },

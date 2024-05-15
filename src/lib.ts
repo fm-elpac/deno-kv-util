@@ -1,12 +1,19 @@
-/// deno-kv 小工具.
-/// util for deno-kv database.
+/** @module
+ *
+ * deno-kv 小工具.
+ * util for deno-kv database.
+ */
 
-// chunk_set, chunk_get: 用于在 deno-kv 存储更大的数据
-// 每个 key 可以存储的最大字节数
+/**
+ * chunk_set, chunk_get: 用于在 deno-kv 存储更大的数据
+ * 每个 key 可以存储的最大字节数
+ */
 const KV_MAX_SIZE = 65536;
 
-/// 写入较大的数据, 使用分片.
-/// write large object with chunk.
+/**
+ * 写入较大的数据, 使用分片.
+ * write large object with chunk.
+ */
 export async function chunk_set(kv: Deno.Kv, k: Deno.KvKey, data: unknown) {
   // 数据转换成字节
   const b = new TextEncoder().encode(JSON.stringify(data));
@@ -30,8 +37,10 @@ export async function chunk_set(kv: Deno.Kv, k: Deno.KvKey, data: unknown) {
   }
 }
 
-/// 读取较大的数据, 使用分片.
-/// read large object with chunk.
+/**
+ * 读取较大的数据, 使用分片.
+ * read large object with chunk.
+ */
 export async function chunk_get(kv: Deno.Kv, k: Deno.KvKey): Promise<unknown> {
   // 读取所有数据
   const d = [];
@@ -54,8 +63,10 @@ export async function chunk_get(kv: Deno.Kv, k: Deno.KvKey): Promise<unknown> {
   return JSON.parse(new TextDecoder().decode(o));
 }
 
-/// 一次设置多个值, 加快写入 deno-kv 的速度.
-/// write multiple value at once, to speed up write speed.
+/**
+ * 一次设置多个值, 加快写入 deno-kv 的速度.
+ * write multiple value at once, to speed up write speed.
+ */
 export async function batch_set(kv: Deno.Kv, data: Array<unknown>, n: number) {
   let index = 0;
   let rest = data.length;
